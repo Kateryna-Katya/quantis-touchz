@@ -1,16 +1,16 @@
 /**
- * TERON-HOLIC.BLOG - ОФИЦИАЛЬНЫЙ СКРИПТ ПЛАТФОРМЫ (2026)
+ * QUANTIS-TOUCHZ.ORG - OFFICIAL PLATFORM SCRIPT (2026)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. ИНИЦИАЛИЗАЦИЯ ИКОНОК
-  // Используем Lucide для современных минималистичных иконок
+  // 1. ICON INITIALIZATION
+  // Using Lucide for modern minimalistic icons
   if (typeof lucide !== 'undefined') {
       lucide.createIcons();
   }
 
-  // 2. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+  // 2. GLOBAL VARIABLES
   const header = document.querySelector('.header');
   const burger = document.querySelector('.header__burger');
   const mobileNav = document.querySelector('.mobile-nav');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookiePopup = document.getElementById('cookiePopup');
   const acceptCookies = document.getElementById('acceptCookies');
 
-  // 3. ЛОГИКА МОБИЛЬНОГО МЕНЮ
+  // 3. MOBILE MENU LOGIC
   const toggleMenu = () => {
       mobileNav.classList.toggle('mobile-nav--active');
       document.body.style.overflow = mobileNav.classList.contains('mobile-nav--active') ? 'hidden' : '';
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (burger) burger.addEventListener('click', toggleMenu);
   if (closeNav) closeNav.addEventListener('click', toggleMenu);
 
-  // Закрытие при клике на ссылку (для якорной навигации)
+  // Close menu on link click (for anchor navigation)
   navLinks.forEach(link => {
       link.addEventListener('click', () => {
           if (mobileNav.classList.contains('mobile-nav--active')) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
-  // 4. ЭФФЕКТЫ ПРИ СКРОЛЛЕ (HEADER)
+  // 4. SCROLL EFFECTS (HEADER)
   window.addEventListener('scroll', () => {
       if (window.scrollY > 60) {
           header.classList.add('header--scrolled');
@@ -48,17 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 
-  // 5. ПРОДВИНУТЫЕ АНИМАЦИИ (GSAP + ScrollTrigger)
+  // 5. ADVANCED ANIMATIONS (GSAP + ScrollTrigger)
   if (typeof gsap !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
 
-      // Фикс разрыва слов: используем SplitType с группировкой по словам и символам
+      // Fix word breaking: use SplitType with word and character grouping
       const heroTitle = new SplitType('.hero__title', {
           types: 'words,chars',
           tagName: 'span'
       });
 
-      // Анимация появления заголовка Hero
+      // Hero title appearance animation
       gsap.from(heroTitle.chars, {
           opacity: 0,
           y: 50,
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ease: "expo.out"
       });
 
-      // Анимация контента Hero (текст и кнопки)
+      // Hero content animation (text and buttons)
       gsap.from('.hero__badge, .hero__text, .hero__btns', {
           opacity: 0,
           y: 30,
@@ -78,14 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
           ease: "power3.out"
       });
 
-      // Появление секций при скролле (Scroll Reveal)
+      // Scroll Reveal for sections
       const revealElements = document.querySelectorAll('.benefit-card, .innovation-item, .blog-card, .section-header');
 
       revealElements.forEach((el) => {
           gsap.from(el, {
               scrollTrigger: {
                   trigger: el,
-                  start: "top 85%", // Анимация начнется, когда элемент на 85% в поле видимости
+                  start: "top 85%",
                   toggleActions: "play none none none"
               },
               opacity: 0,
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
       });
 
-      // Интерактивный параллакс для декоративного круга в Hero
+      // Interactive parallax for Hero decorative circle
       gsap.to('.hero__circle', {
           scrollTrigger: {
               trigger: '.hero',
@@ -109,15 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // 6. ВАЛИДАЦИЯ ФОРМЫ И КАПЧА
+  // 6. FORM VALIDATION AND CAPTCHA
   if (phoneInput) {
-      // Разрешаем только цифры в поле телефона
+      // Allow only digits in the phone field
       phoneInput.addEventListener('input', (e) => {
           e.target.value = e.target.value.replace(/[^0-9]/g, '');
       });
   }
 
-  // Генерация математической капчи
+  // Generate math captcha
   const num1 = Math.floor(Math.random() * 9) + 1;
   const num2 = Math.floor(Math.random() * 9) + 1;
   const captchaQuestion = document.getElementById('captchaQuestion');
@@ -135,36 +135,36 @@ document.addEventListener('DOMContentLoaded', () => {
           const formMessage = document.getElementById('formMessage');
 
           if (parseInt(userAnswer) !== correctSum) {
-              alert("Ошибка: Неверный ответ на математический пример.");
+              alert("Error: Incorrect answer to the math problem.");
               return;
           }
 
-          // Имитация AJAX-запроса
+          // Simulated AJAX request
           const submitBtn = contactForm.querySelector('button[type="submit"]');
           submitBtn.disabled = true;
-          submitBtn.innerText = "Отправка...";
+          submitBtn.innerText = "Sending...";
 
           setTimeout(() => {
               formMessage.style.display = 'block';
               formMessage.innerHTML = `<div style="color: #4ade80; background: rgba(74, 222, 128, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
-                  ⚡ Спасибо! Ваш запрос принят. Мы свяжемся с вами в ближайшее время.
+                  ⚡ Thank you! Your request has been received. We will contact you shortly.
               </div>`;
 
               contactForm.reset();
               submitBtn.disabled = false;
-              submitBtn.innerText = "Отправить запрос";
+              submitBtn.innerText = "Submit Request";
 
-              // Убираем сообщение через 7 секунд
+              // Clear message after 7 seconds
               setTimeout(() => { formMessage.innerHTML = ""; }, 7000);
           }, 1500);
       });
   }
 
-  // 7. ЛОГИКА COOKIE POPUP
-  const COOKIE_KEY = 'teron_holic_cookies_accepted';
+  // 7. COOKIE POPUP LOGIC
+  const COOKIE_KEY = 'quantis_touchz_cookies_accepted';
 
   if (cookiePopup && !localStorage.getItem(COOKIE_KEY)) {
-      // Показываем плавно через 3 секунды после загрузки
+      // Show smoothly 3 seconds after load
       setTimeout(() => {
           cookiePopup.style.display = 'block';
           gsap.fromTo(cookiePopup, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.6 });
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // 8. ПЛАВНЫЙ СКРОЛЛ К ЯКОРЯМ
+  // 8. SMOOTH SCROLL TO ANCHORS
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
           const targetId = this.getAttribute('href');
