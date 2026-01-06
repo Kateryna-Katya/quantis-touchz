@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/teron-holic/",
+    "build": "vite build --base=/quantis-touchz/",
     "preview": "vite preview"
   },
   "devDependencies": {
